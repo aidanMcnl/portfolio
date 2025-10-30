@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>{{ page.title | escape }} | {{ site.title | escape }}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% if page.excerpt %}
+  <meta name="description" content="{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}">
+  {% else %}
+  <meta name="description" content="{{ site.description }}">
+  {% endif %}
+  <link rel="stylesheet" href="{{ "/assets/css/site.css" | relative_url }}">
+</head>
+<body>
+  <header role="banner" class="site-header">
+    <nav aria-label="Primary" class="nav-wrap">
+      <a href="{{ "/" | relative_url }}" class="brand">{{ site.title }}</a>
+      <ul class="nav">
+        <li><a href="{{ "/" | relative_url }}">Home</a></li>
+        <li><a href="{{ "/projects/" | relative_url }}">Projects</a></li>
+        <li><a href="{{ "/publications/" | relative_url }}">Publications</a></li>
+        <li><a href="{{ "/about.html" | relative_url }}">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="content" class="container" role="main">
+    {{ content }}
+  </main>
+
+  <footer role="contentinfo" class="site-footer">
+    <p>&copy; {{ site.title }} {{ "now" | date: "%Y" }}</p>
+  </footer>
+</body>
+</html>

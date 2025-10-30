@@ -1,0 +1,61 @@
+---
+layout: default
+---
+<article class="content">
+  {% if page.url == "/projects/" or page.url == "/projects/index.html" %}
+    <h1>Projects</h1>
+    {% assign items = site.projects | sort: "date" | reverse %}
+    <ul class="cards" role="list">
+      {% for item in items %}
+      <li class="card">
+        <h2 class="card-title"><a href="{{ item.url | relative_url }}">{{ item.title }}</a></h2>
+        {% if item.summary %}<p class="card-summary">{{ item.summary }}</p>{% endif %}
+        {% if item.tags %}
+        <p class="tags">
+          {% for tag in item.tags %}
+            <span class="tag">{{ tag }}</span>
+          {% endfor %}
+        </p>
+        {% endif %}
+        <p class="meta">
+          {% if item.repo %}<a href="{{ item.repo }}" class="btn">Repo</a>{% endif %}
+          {% if item.demo %} {% if item.repo %}<span aria-hidden="true"> · </span>{% endif %}<a href="{{ item.demo }}" class="btn">Demo</a>{% endif %}
+        </p>
+      </li>
+      {% endfor %}
+    </ul>
+  {% elsif page.url == "/publications/" or page.url == "/publications/index.html" %}
+    <h1>Publications</h1>
+    {% assign groups = site.publications | group_by: "year" | sort: "name" | reverse %}
+    {% for group in groups %}
+      <h2 class="year-heading">{{ group.name }}</h2>
+      <ol class="pubs">
+      {% assign pubs_sorted = group.items | sort: "title" %}
+      {% for pub in pubs_sorted %}
+        <li class="pub-item">
+          {% if pub.authors %}{{ pub.authors | join: ", " }}{% endif %}
+          {% if pub.year %} ({{ pub.year }}){% endif %}.
+          <strong>{{ pub.title }}</strong>.
+          {% if pub.venue %} {{ pub.venue }}.{% endif %}
+          {% assign has_prev = false %}
+          {% if pub.doi %}
+            <a href="https://doi.org/{{ pub.doi }}">DOI</a>
+            {% assign has_prev = true %}
+          {% endif %}
+          {% if pub.pdf %}
+            {% if has_prev %}|{% endif %}
+            <a href="{{ pub.pdf }}">PDF</a>
+            {% assign has_prev = true %}
+          {% endif %}
+          {% if pub.url %}
+            {% if has_prev %}|{% endif %}
+            <a href="{{ pub.url }}">URL</a>
+          {% endif %}
+        </li>
+      {% endfor %}
+      </ol>
+    {% endfor %}
+  {% else %}
+    {{ content }}
+  {% endif %}
+</article>

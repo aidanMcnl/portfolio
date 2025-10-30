@@ -1,0 +1,22 @@
+title: "Your Name"
+description: "Projects and publications"
+theme: minima
+markdown: kramdown
+
+collections:
+  projects:
+    output: true
+  publications:
+    output: true
+
+defaults:
+  - scope:
+      path: ""
+      type: "projects"
+    values:
+      layout: "collection"
+  - scope:
+      path: ""
+      type: "publications"
+    values:
+      layout: "collection"
